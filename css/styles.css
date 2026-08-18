@@ -1,0 +1,143 @@
+/* css/styles.css */
+:root{
+  --primary: #0d6efd;
+}
+body {
+  background: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Arial, "Noto Sans Arabic", sans-serif;
+}
+.navbar-brand { font-weight: 600; }
+.card-header { background: #f1f3f5; font-weight: 600; }
+#projectsList .list-group-item { cursor: pointer; }
+.project-badge { font-size: 0.8rem; }
+.leaflet-popup-content { direction: rtl; text-align: right; }
+
+/* Container for CSS-3D machine elements positioned over the map */
+.machines-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* أولياً لذلك لا يقطع أحداث الخريطة — سنفعل pointer-events لكل آلة */
+}
+
+/* آلة 3D بسيطة (جسم - ذراع) */
+.machine {
+  position: absolute;
+  width: 80px;
+  height: 50px;
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+  transition: transform 300ms ease, top 200ms linear, left 200ms linear;
+  pointer-events: auto; /* كل آلة تستقبل النقر */
+  cursor: pointer;
+  will-change: transform, left, top;
+}
+
+/* الظل أسفل الآلة لعمق بسيط */
+.machine .shadow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -6px;
+  width: 60px;
+  height: 10px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 50%;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+/* جسم الآلة (صندوق) */
+.machine .body {
+  position: absolute;
+  width: 70px;
+  height: 36px;
+  left: 5px;
+  bottom: 6px;
+  background: linear-gradient(135deg,#ffb703,#fb8500);
+  border-radius: 6px;
+  box-shadow: 0 6px 10px rgba(0,0,0,0.12);
+  transform-origin: center center;
+  transform: rotateX(8deg) translateZ(6px);
+  z-index: 2;
+}
+
+/* سطح علوي يعزز تأثير 3D */
+.machine .top {
+  position: absolute;
+  left: 12px;
+  top: -8px;
+  width: 46px;
+  height: 18px;
+  background: linear-gradient(180deg,#ffd166,#f07c00);
+  border-radius: 4px;
+  transform: rotateX(40deg);
+  z-index: 3;
+  opacity: 0.95;
+}
+
+/* ذراع الحفارة */
+.machine .arm {
+  position: absolute;
+  right: -26px;
+  bottom: 26px;
+  width: 40px;
+  height: 8px;
+  background: linear-gradient(90deg,#6c757d,#343a40);
+  border-radius: 4px;
+  transform-origin: left center;
+  transform: rotate(-30deg);
+  z-index: 1;
+  transition: transform 400ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* دلّاية الحفر (bucket) */
+.machine .bucket {
+  position: absolute;
+  right: -34px;
+  bottom: 18px;
+  width: 18px;
+  height: 14px;
+  background: #555;
+  border-radius: 3px;
+  transform: rotate(20deg);
+  z-index: 0;
+  box-shadow: inset -4px -4px 8px rgba(0,0,0,0.25);
+}
+
+/* حالة تفاعل — تحريك الذراع (مؤثر عند النقر) */
+.machine.active .arm {
+  transform: rotate(-5deg);
+}
+
+/* تمييز حسب الحالة (active / completed / planned) */
+.machine.status-active .body { background: linear-gradient(135deg,#ffd54f,#ff9800); }
+.machine.status-planned .body { background: linear-gradient(135deg,#90caf9,#42a5f5); }
+.machine.status-completed .body { background: linear-gradient(135deg,#a5d6a7,#66bb6a); }
+
+/* تلوين مؤشر صغير فوق الآلة يحمل الرمز */
+.machine .label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -22px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  z-index: 4;
+  white-space: nowrap;
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 768px){
+  .machine { width: 64px; height: 42px; }
+  .machine .body { width: 56px; height: 30px; left: 4px; bottom: 6px; }
+}
+
+/* three overlay */
+.three-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
