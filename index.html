@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>شركة الحفر - الشيخ نجار (SaaS + 3D models)</title>
+
+  <!-- Bootstrap RTL -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">شركة الحفر - الشيخ نجار (SaaS)</a>
+      <div class="d-flex">
+        <a id="btnDashboard" class="btn btn-outline-light me-2" href="dashboard.html">لوحة التحكم</a>
+        <a id="btnLogin" class="btn btn-light me-1" href="auth/login.html">تسجيل الدخول</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid p-3">
+    <div class="row">
+      <!-- Sidebar -->
+      <aside class="col-lg-4 col-md-12 mb-3">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">المستخدم الحالي</h5>
+            <p id="currentUserInfo">غير مسجل — <a href="auth/login.html">تسجيل الدخول</a> أو <a href="auth/signup.html">إنشاء حساب</a></p>
+            <div class="mb-2">
+              <input id="searchInput" class="form-control" placeholder="ابحث عن مشروع أو معدات أو اسم" />
+            </div>
+            <div class="mb-2">
+              <select id="statusFilter" class="form-select">
+                <option value="all">كل الحالات</option>
+                <option value="active">جاري</option>
+                <option value="planned">مخطط</option>
+                <option value="completed">مكتمل</option>
+              </select>
+            </div>
+            <div class="d-grid gap-2">
+              <button id="resetBtn" class="btn btn-outline-secondary">إعادة الضبط</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">قائمة المشاريع (للمستخدم الحالي)</div>
+          <ul id="projectsList" class="list-group list-group-flush" style="max-height: 38vh; overflow:auto;">
+            <!-- Projects injected by JS -->
+          </ul>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">تعليمات سريعة</div>
+          <div class="card-body">
+            <ul>
+              <li>لتجريب SaaS: سجل كمستخدم جديد ثم ادخل لوحة التحكم لإضافة/تعديل مشاريعك.</li>
+              <li>النماذج ثلاثية الأبعاد تُحمّل تلقائياً من Quaternius (GLB.zip) وتعرض فوق الخريطة.</li>
+              <li>إن فشل التحميل بسبب CORS، نفّذ أحد الحلول الواردة في رسالة الخطأ (تشغيل خادم محلي أو تنزيل الحزمة يدوياً).</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Map -->
+      <section class="col-lg-8 col-md-12 position-relative">
+        <div id="map" style="height: 78vh; border: 1px solid #ddd;"></div>
+        <!-- حاوية نماذج three.js -->
+        <div id="three-overlay" class="three-overlay"></div>
+      </section>
+    </div>
+
+    <!-- About / Contact -->
+    <section id="about" class="mt-4">
+      <div class="card">
+        <div class="card-header">عن الشركة (تجريبي)</div>
+        <div class="card-body">
+          <p>شركة افتراضية متخصصة بأعمال الحفريات والمعدات الثقيلة لتجهيز البنية التحتية للمعامل في منطقة الشيخ نجار. هذا إصدار SaaS تجريبي — كل البيانات محلية.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center py-3">
+    &copy; 2026 شركة الحفريات - SaaS تجريبي (بيانات وهمية)
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- تطبيق المشروع (SaaS, خريطة، إلخ) -->
+  <script src="js/saas.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- three.js وملحقاته وJSZip (لتحميل وفك zip في المتصفح) -->
+  <script src="https://unpkg.com/three@0.154.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.154.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <!-- سكربت تحميل ودمج نماذج GLB تلقائياً -->
+  <script src="js/three-loader.js"></script>
+</body>
+</html>
